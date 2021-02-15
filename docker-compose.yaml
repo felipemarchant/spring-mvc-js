@@ -1,0 +1,27 @@
+version: '3.8'
+services: 
+  java_server:
+    container_name: java_server
+    build: ./docker
+    ports: 
+      - "82:8080"
+    networks: 
+      - java_net
+    depends_on: 
+      - java_db
+  java_db:
+    container_name: java_bd
+    image: postgres:9.1
+    volumes: 
+      - ./docker/data:/var/lib/postgresql/data
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=angularjs_spring_restful
+    networks: 
+      - java_net
+    ports:
+      - "5435:5432"
+
+networks: 
+  java_net:
